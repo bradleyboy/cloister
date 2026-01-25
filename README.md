@@ -2,6 +2,8 @@
 
 A local web UI for browsing and monitoring your [Claude Code](https://docs.anthropic.com/en/docs/claude-code) conversation history.
 
+![Cloister screenshot](screenshot.png)
+
 ## Features
 
 - Browse all your Claude Code sessions organized by project
