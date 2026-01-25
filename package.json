@@ -1,0 +1,43 @@
+{
+  "name": "cloister",
+  "version": "1.0.0",
+  "description": "Local web UI for browsing Claude Code conversation history",
+  "type": "module",
+  "bin": {
+    "cloister": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "public"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun --format esm && mv dist/index.js dist/cli.js && chmod +x dist/cli.js",
+    "prepublishOnly": "npm run build",
+    "ralph": "./run-tasks.sh"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "conversation",
+    "history",
+    "viewer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdaily/cloister"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  }
+}

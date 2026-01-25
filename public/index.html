@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloister</title>
+  <link rel="stylesheet" href="/styles.css">
+  <!-- Syntax highlighting - using the full bundle with common languages -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Additional language support -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+  <!-- Markdown parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="header">
+        <div class="logo">
+          <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" rx="16" fill="var(--bg-tertiary)"/>
+            <g transform="translate(50, 50)">
+              <path d="M -28 25 L -28 -5 Q -28 -28 0 -28 Q 28 -28 28 -5 L 28 25"
+                    fill="none" stroke="var(--accent)" stroke-width="8" stroke-linecap="round"/>
+              <rect x="-4" y="2" width="8" height="14" rx="1" fill="var(--success)">
+                <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" repeatCount="indefinite"/>
+              </rect>
+            </g>
+          </svg>
+          Cloister
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Time</div>
+        <ul class="filter-list" id="time-filters">
+          <li class="filter-item active" data-filter="all">
+            <div class="filter-radio"></div>
+            All Sessions
+            <span class="filter-count" id="count-all">0</span>
+          </li>
+          <li class="filter-item" data-filter="today">
+            <div class="filter-radio"></div>
+            Today
+            <span class="filter-count" id="count-today">0</span>
+          </li>
+          <li class="filter-item" data-filter="week">
+            <div class="filter-radio"></div>
+            This Week
+            <span class="filter-count" id="count-week">0</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Tags</div>
+        <div class="tag-list" id="tag-list">
+          <!-- Tags populated by JS -->
+        </div>
+      </div>
+
+      <div class="sidebar-section" style="flex: 1; overflow-y: auto;">
+        <div class="sidebar-title">Projects</div>
+        <div id="project-list">
+          <!-- Projects populated by JS -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- List View -->
+      <div class="list-view" id="list-view">
+        <div class="header">
+          <div class="search-box">
+            <div class="search-wrapper">
+              <span class="search-icon">&#x1F50D;</span>
+              <input type="text" class="search-input" id="search-input" placeholder="Search sessions...">
+            </div>
+          </div>
+        </div>
+
+        <div class="session-list" id="session-list">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            Loading sessions...
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail View -->
+      <div class="detail-view" id="detail-view">
+        <div class="detail-header">
+          <button class="back-button" id="back-button">
+            &#x2190; Back to sessions
+          </button>
+          <div class="detail-title" id="detail-title"></div>
+          <div class="detail-meta" id="detail-meta"></div>
+        </div>
+
+        <div id="detail-banner"></div>
+
+        <div class="messages" id="messages">
+          <!-- Messages populated by JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
