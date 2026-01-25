@@ -126,7 +126,8 @@ When asked to "work on the next task" or similar:
 4. Complete the work
 5. Append to Work Log with date, solution summary, and files modified
 6. Set `status: completed`
-7. Loop back to step 1 if requested
+7. Commit all changes as a single commit with message referencing the task
+8. Loop back to step 1 if requested
 
 ## Known Limitations & TODOs
 
