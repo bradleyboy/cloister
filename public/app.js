@@ -803,6 +803,7 @@ function renderToolUse(block, toolResults = new Map()) {
   let path = '';
   let content = '';
   let summary = '';
+  let hasSpecializedContent = false;
 
   if (block.input) {
     if (block.input.file_path) {
@@ -815,19 +816,26 @@ function renderToolUse(block, toolResults = new Map()) {
 
     if (toolName === 'Edit' && block.input.old_string && block.input.new_string) {
       content = renderDiff(block.input.old_string, block.input.new_string);
+      hasSpecializedContent = true;
     } else if (toolName === 'Write' && block.input.content) {
       content = renderCodeBlock(block.input.content, getFileLanguage(block.input.file_path || ''));
+      hasSpecializedContent = true;
     } else if (toolName === 'TodoWrite' || toolName === 'TaskCreate' || toolName === 'TaskUpdate') {
       content = renderTodoContent(block.input);
+      hasSpecializedContent = true;
     } else if (toolName === 'TaskList' || toolName === 'TaskGet') {
       content = renderTaskListContent(block, toolResults);
+      hasSpecializedContent = true;
     } else if (toolName === 'Task') {
       content = renderTaskAgentContent(block.input);
       summary = block.input.description || '';
+      hasSpecializedContent = true;
     } else if (toolName === 'Grep' || toolName === 'Glob') {
       content = renderSearchContent(block.input);
+      hasSpecializedContent = true;
     } else if (toolName === 'Bash' && block.input.command) {
       content = renderBashCommand(block.input);
+      hasSpecializedContent = true;
     } else if (toolName === 'Read') {
       summary = block.input.file_path ? `Reading ${block.input.file_path.split('/').pop()}` : '';
     }
@@ -851,20 +859,162 @@ function renderToolUse(block, toolResults = new Map()) {
     return renderQuestionCard(block.input.questions, selectedAnswers);
   }
 
+  // Get tool result for this tool call
+  const toolResult = toolResults.get(block.id);
+
+  // For tools without specialized content, render a generic detail view
+  if (!hasSpecializedContent) {
+    content = renderToolDetailView(block.input, toolResult);
+  } else if (toolResult && toolResult.content) {
+    // Append tool result to specialized content
+    const resultContent = renderToolResultContent(toolResult.content);
+    if (resultContent) {
+      content += resultContent;
+    }
+  }
+
   // Use summary if available, otherwise use path
   const displayPath = summary || path;
 
+  // All tool cards should now be expandable since we always have content
   return `
-    <div class="tool-card ${toolClass} ${content ? '' : 'collapsed'}">
+    <div class="tool-card ${toolClass} collapsed">
       <div class="tool-header">
         <div class="tool-icon">${icon}</div>
         <span class="tool-name">${toolName}</span>
         <span class="tool-path">${escapeHtml(displayPath)}</span>
-        ${content ? '<span class="tool-toggle">&#x25BC;</span>' : ''}
+        <span class="tool-toggle">&#x25BC;</span>
       </div>
-      ${content ? `<div class="tool-body">${content}</div>` : ''}
+      <div class="tool-body">${content}</div>
     </div>
   `;
+}
+
+// Render a generic detail view for tool input and output
+function renderToolDetailView(input, toolResult) {
+  let html = '<div class="tool-detail-view">';
+
+  // Render input section if there's input
+  if (input && Object.keys(input).length > 0) {
+    html += '<div class="tool-section">';
+    html += '<div class="tool-section-header">Input</div>';
+    html += '<div class="tool-section-content">';
+    html += renderToolInputParams(input);
+    html += '</div></div>';
+  }
+
+  // Render output section if there's a result
+  if (toolResult && toolResult.content) {
+    const resultHtml = renderToolResultContent(toolResult.content);
+    if (resultHtml) {
+      html += resultHtml;
+    }
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// Render tool input parameters in a readable format
+function renderToolInputParams(input) {
+  let html = '<div class="tool-params">';
+
+  for (const [key, value] of Object.entries(input)) {
+    // Skip very long content values that would clutter the view
+    const displayValue = formatParamValue(key, value);
+    html += `
+      <div class="tool-param">
+        <span class="tool-param-key">${escapeHtml(key)}:</span>
+        <span class="tool-param-value">${displayValue}</span>
+      </div>
+    `;
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// Format a parameter value for display
+function formatParamValue(key, value) {
+  if (value === null || value === undefined) {
+    return '<span class="tool-param-null">null</span>';
+  }
+
+  if (typeof value === 'boolean') {
+    return `<span class="tool-param-bool">${value}</span>`;
+  }
+
+  if (typeof value === 'number') {
+    return `<span class="tool-param-number">${value}</span>`;
+  }
+
+  if (typeof value === 'string') {
+    // For long strings, truncate and show in a code-like format
+    if (value.length > 200) {
+      const truncated = value.slice(0, 200) + '...';
+      return `<code class="tool-param-string">${escapeHtml(truncated)}</code>`;
+    }
+    // For multiline strings, show in a pre block
+    if (value.includes('\n')) {
+      return `<pre class="tool-param-multiline">${escapeHtml(value)}</pre>`;
+    }
+    return `<code class="tool-param-string">${escapeHtml(value)}</code>`;
+  }
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return '<span class="tool-param-array">[]</span>';
+    }
+    // For small arrays, show inline
+    if (value.length <= 3 && value.every(v => typeof v === 'string' || typeof v === 'number')) {
+      return `<span class="tool-param-array">[${value.map(v => escapeHtml(String(v))).join(', ')}]</span>`;
+    }
+    // For larger arrays, show as JSON
+    return `<pre class="tool-param-json">${escapeHtml(JSON.stringify(value, null, 2))}</pre>`;
+  }
+
+  if (typeof value === 'object') {
+    return `<pre class="tool-param-json">${escapeHtml(JSON.stringify(value, null, 2))}</pre>`;
+  }
+
+  return escapeHtml(String(value));
+}
+
+// Render tool result content
+function renderToolResultContent(content) {
+  if (!content) return '';
+
+  let html = '<div class="tool-section tool-output">';
+  html += '<div class="tool-section-header">Output</div>';
+  html += '<div class="tool-section-content">';
+
+  if (typeof content === 'string') {
+    const trimmed = content.trim();
+    if (!trimmed) {
+      html += '<span class="tool-result-empty">(empty)</span>';
+    } else if (trimmed.length > 1000) {
+      // For very long output, truncate
+      html += `<pre class="tool-result-text">${escapeHtml(trimmed.slice(0, 1000))}...\n\n[${trimmed.length - 1000} more characters]</pre>`;
+    } else {
+      html += `<pre class="tool-result-text">${escapeHtml(trimmed)}</pre>`;
+    }
+  } else if (Array.isArray(content)) {
+    // Handle array content (like nested content blocks)
+    const textParts = content
+      .filter(c => c.type === 'text' && c.text)
+      .map(c => c.text)
+      .join('\n');
+    if (textParts) {
+      html += `<pre class="tool-result-text">${escapeHtml(textParts)}</pre>`;
+    } else {
+      html += `<pre class="tool-result-json">${escapeHtml(JSON.stringify(content, null, 2))}</pre>`;
+    }
+  } else {
+    html += `<pre class="tool-result-json">${escapeHtml(JSON.stringify(content, null, 2))}</pre>`;
+  }
+
+  html += '</div></div>';
+  return html;
 }
 
 // Render todo/task content
@@ -1008,45 +1158,12 @@ function renderBashCommand(input) {
   return html;
 }
 
-// Render tool result with deferred content loading for collapsed cards
+// Render tool result - now returns empty as results are shown within tool_use cards
 function renderToolResult(block) {
-  let content = block.content;
-
-  if (typeof content === 'string') {
-    // Check if it looks like code
-    if (content.includes('\n') && (content.includes('function') || content.includes('const ') || content.includes('import '))) {
-      // Store content as data attribute for deferred rendering
-      const escapedContent = escapeHtml(JSON.stringify(content));
-      return `
-        <div class="tool-card tool-result collapsed deferred" data-raw-content="${escapedContent}">
-          <div class="tool-header">
-            <div class="tool-icon">&#x2705;</div>
-            <span class="tool-name">Result</span>
-            <span class="tool-toggle">&#x25BC;</span>
-          </div>
-          <div class="tool-body"></div>
-        </div>
-      `;
-    }
-
-    // Check if it looks like bash output
-    if (content.startsWith('$') || content.includes('npm') || content.includes('bun')) {
-      // Store content as data attribute for deferred rendering
-      const escapedContent = escapeHtml(JSON.stringify(content));
-      return `
-        <div class="tool-card tool-bash collapsed deferred" data-raw-content="${escapedContent}">
-          <div class="tool-header">
-            <div class="tool-icon">&#x2705;</div>
-            <span class="tool-name">Output</span>
-            <span class="tool-toggle">&#x25BC;</span>
-          </div>
-          <div class="tool-body"></div>
-        </div>
-      `;
-    }
-  }
-
-  return ''; // Most tool results can be collapsed by default
+  // Tool results are now integrated into their corresponding tool_use blocks
+  // via the toolResults map passed to renderToolUse, so we don't render
+  // separate cards for tool results anymore
+  return '';
 }
 
 // Parse question answers from tool result

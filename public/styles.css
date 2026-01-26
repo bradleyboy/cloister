@@ -1586,6 +1586,157 @@ code {
   display: block;
 }
 
+/* Tool Detail View - Input/Output display */
+.tool-detail-view {
+  padding: 0;
+}
+
+.tool-section {
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-section:last-child {
+  border-bottom: none;
+}
+
+.tool-section-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-section-content {
+  padding: 12px;
+}
+
+.tool-output .tool-section-header {
+  color: var(--success);
+}
+
+/* Tool Parameters */
+.tool-params {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tool-param {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tool-param-key {
+  color: var(--accent);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.tool-param-value {
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+
+.tool-param-value code,
+.tool-param-string {
+  background: var(--bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+}
+
+.tool-param-null {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.tool-param-bool {
+  color: #ff7b72;
+}
+
+.tool-param-number {
+  color: #79c0ff;
+}
+
+.tool-param-multiline {
+  display: block;
+  background: var(--bg-tertiary);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tool-param-json {
+  display: block;
+  background: var(--bg-tertiary);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tool-param-array {
+  color: var(--text-secondary);
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+}
+
+/* Tool Result Output */
+.tool-result-text {
+  background: var(--bg-tertiary);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.tool-result-json {
+  background: var(--bg-tertiary);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.tool-result-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+
 /* Sidebar Footer / GitHub Link */
 .sidebar-footer {
   padding: 16px;
