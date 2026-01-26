@@ -5,15 +5,15 @@ Local web UI for browsing Claude Code conversation history.
 ## Quick Start
 
 ```bash
-bun install        # Install dependencies
-bun run dev        # Start dev server with watch mode (localhost:3333)
-bun run start      # Start production server
+npm install        # Install dependencies
+npm run dev        # Start dev server with watch mode (localhost:3333)
+npm run start      # Start production server
 ```
 
 ## Tech Stack
 
-- **Runtime**: Bun
-- **Server**: Hono (TypeScript)
+- **Runtime**: Node.js (18+)
+- **Server**: Hono (TypeScript) with @hono/node-server
 - **Frontend**: Vanilla HTML/CSS/JS (no build step)
 - **Database**: None - reads directly from `~/.claude/projects/` JSONL files
 
@@ -21,8 +21,9 @@ bun run start      # Start production server
 
 ```
 src/
-├── index.ts       # CLI entry point, Bun.serve()
+├── index.ts       # CLI entry point, Node.js HTTP server
 ├── server.ts      # Hono routes and SSE streaming
+├── paths.ts       # Path resolution for dev vs npm package
 ├── sessions.ts    # Session discovery and parsing
 ├── parser.ts      # JSONL message parsing
 ├── tagger.ts      # Auto-classification (debugging, feature, git, etc.)

@@ -9,8 +9,8 @@ import {
   generateSessionSummary,
   determineSessionStatus,
   type Message,
-} from "./parser";
-import { generateTags, type Tag } from "./tagger";
+} from "./parser.js";
+import { generateTags, type Tag } from "./tagger.js";
 
 export interface Session {
   id: string;

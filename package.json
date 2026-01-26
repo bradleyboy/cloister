@@ -11,9 +11,9 @@
     "public"
   ],
   "scripts": {
-    "start": "bun run src/index.ts",
-    "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun --format esm && mv dist/index.js dist/cli.js && chmod +x dist/cli.js",
+    "start": "node dist/cli.js",
+    "dev": "npx tsx --watch src/index.ts",
+    "build": "npx tsc && mv dist/index.js dist/cli.js && chmod +x dist/cli.js",
     "prepublishOnly": "npm run build",
     "ralph": "./run-tasks.sh"
   },
@@ -31,13 +31,15 @@
     "url": "https://github.com/bradleyboy/cloister"
   },
   "engines": {
-    "bun": ">=1.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
+    "@hono/node-server": "^1.13.0",
     "hono": "^4.6.0"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
     "typescript": "^5.0.0"
   }
 }

@@ -1,7 +1,8 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 // Cloister - Local hub for Claude Code history
 
-import { createServer } from "./server";
+import { serve } from "@hono/node-server";
+import { createServer } from "./server.js";
 
 const DEFAULT_PORT = 3333;
 
@@ -27,7 +28,7 @@ Cloister - Local hub for Claude Code history
 
 Usage:
   cloister [options]
-  bunx cloister [options]
+  npx cloister [options]
 
 Options:
   -p, --port <port>  Port to run server on (default: ${DEFAULT_PORT})
@@ -43,7 +44,7 @@ Options:
 
 async function main() {
   const { port, daemon } = parseArgs();
-  const app = createServer();
+  const app = await createServer();
 
   if (daemon) {
     // For daemon mode, we'd typically use a process manager
@@ -64,9 +65,9 @@ async function main() {
   ╰──────────────────────────────────────╯
   `);
 
-  Bun.serve({
-    port,
+  serve({
     fetch: app.fetch,
+    port,
   });
 }
 

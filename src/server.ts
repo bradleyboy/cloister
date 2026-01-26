@@ -1,21 +1,24 @@
 // Hono server with API routes and SSE
 
 import { Hono } from "hono";
-import { serveStatic } from "hono/bun";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { streamSSE } from "hono/streaming";
+import { readFile, stat } from "node:fs/promises";
 import {
   discoverSessions,
   getSessionById,
   getProjectList,
   getTagCounts,
-} from "./sessions";
-import { sessionWatcher, type WatcherEvent } from "./watcher";
+} from "./sessions.js";
+import { sessionWatcher, type WatcherEvent } from "./watcher.js";
+import { resolvePublicDir } from "./paths.js";
 
-export function createServer() {
+export async function createServer() {
   const app = new Hono();
+  const publicDir = await resolvePublicDir();
 
   // Serve static files from public directory
-  app.use("/static/*", serveStatic({ root: "./" }));
+  app.use("/static/*", serveStatic({ root: publicDir }));
 
   // API Routes
   app.get("/api/sessions", async (c) => {
@@ -94,24 +97,24 @@ export function createServer() {
 
   // Serve main HTML page
   app.get("/", async (c) => {
-    const file = Bun.file("./public/index.html");
-    const html = await file.text();
+    const html = await readFile(`${publicDir}/index.html`, "utf-8");
     return c.html(html);
   });
 
   // Session permalink route - serve same HTML, let client-side handle routing
   app.get("/session/:id", async (c) => {
-    const file = Bun.file("./public/index.html");
-    const html = await file.text();
+    const html = await readFile(`${publicDir}/index.html`, "utf-8");
     return c.html(html);
   });
 
   // Serve other static files
   app.get("/:file{.+\\.(css|js|ico|png|svg)$}", async (c) => {
     const fileName = c.req.param("file");
-    const file = Bun.file(`./public/${fileName}`);
+    const filePath = `${publicDir}/${fileName}`;
 
-    if (!(await file.exists())) {
+    try {
+      await stat(filePath);
+    } catch {
       return c.notFound();
     }
 
@@ -125,8 +128,9 @@ export function createServer() {
 
     const ext = fileName.split(".").pop() || "";
     const contentType = contentTypes[ext] || "application/octet-stream";
+    const content = await readFile(filePath);
 
-    return new Response(file, {
+    return new Response(content, {
       headers: { "Content-Type": contentType },
     });
   });

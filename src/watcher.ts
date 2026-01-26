@@ -2,7 +2,7 @@
 
 import { watch } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
-import { parseSessionFile, determineSessionStatus, type Message } from "./parser";
+import { parseSessionFile, determineSessionStatus, type Message } from "./parser.js";
 
 export interface WatcherEvent {
   type: "message" | "status";

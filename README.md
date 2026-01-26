@@ -18,11 +18,7 @@ A local web UI for browsing and monitoring your [Claude Code](https://docs.anthr
 Run Cloister directly without installing:
 
 ```bash
-# Using npx (Node.js)
 npx cloister
-
-# Using bunx (Bun)
-bunx cloister
 ```
 
 Then open http://localhost:3333 in your browser.
@@ -48,13 +44,13 @@ git clone https://github.com/bradleyboy/cloister.git
 cd cloister
 
 # Install dependencies
-bun install
+npm install
 
 # Start development server with hot reload (localhost:3333)
-bun run dev
+npm run dev
 
 # Or start production server
-bun run start
+npm run start
 ```
 
 ## Contributing
@@ -95,7 +91,7 @@ This automatically creates a properly formatted task file in `.claude-tasks/` wi
 Use the autonomous task runner to have Claude complete tasks:
 
 ```bash
-bun run ralph
+npm run ralph
 ```
 
 Or directly:
@@ -118,8 +114,8 @@ See [CLAUDE.md](./CLAUDE.md) for architecture, code conventions, and implementat
 
 ## Tech Stack
 
-- **Runtime**: [Bun](https://bun.sh)
-- **Server**: [Hono](https://hono.dev) (TypeScript)
+- **Runtime**: Node.js (18+)
+- **Server**: [Hono](https://hono.dev) (TypeScript) with [@hono/node-server](https://github.com/honojs/node-server)
 - **Frontend**: Vanilla HTML/CSS/JS (no build step)
 
 ## License

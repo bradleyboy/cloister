@@ -1,6 +1,6 @@
 // Auto-classification logic for sessions
 
-import type { Message } from "./parser";
+import type { Message } from "./parser.js";
 
 export type Tag =
   | "debugging"
