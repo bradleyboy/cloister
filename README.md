@@ -13,24 +13,49 @@ A local web UI for browsing and monitoring your [Claude Code](https://docs.anthr
 - **Lazy loading** - Efficiently handles large sessions with 100+ messages
 - Dark theme with GitHub Dark color scheme
 
-## Quick Start
+## Usage
+
+Run Cloister directly without installing:
 
 ```bash
+# Using npx (Node.js)
+npx cloister
+
+# Using bunx (Bun)
+bunx cloister
+```
+
+Then open http://localhost:3333 in your browser.
+
+### Options
+
+```bash
+cloister --port 8080    # Use a different port
+cloister --help         # Show all options
+```
+
+## How It Works
+
+Cloister reads session files directly from `~/.claude/projects/` - no database required. It watches for changes and streams updates to your browser, so you can monitor active Claude Code sessions as they happen.
+
+## Development
+
+If you want to contribute to Cloister or run it from source:
+
+```bash
+# Clone the repository
+git clone https://github.com/bdailey/cloister.git
+cd cloister
+
 # Install dependencies
 bun install
 
-# Start development server (localhost:3333)
+# Start development server with hot reload (localhost:3333)
 bun run dev
 
 # Or start production server
 bun run start
 ```
-
-Then open http://localhost:3333 in your browser.
-
-## How It Works
-
-Cloister reads session files directly from `~/.claude/projects/` - no database required. It watches for changes and streams updates to your browser, so you can monitor active Claude Code sessions as they happen.
 
 ## Contributing
 
