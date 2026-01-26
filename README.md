@@ -30,8 +30,8 @@ Then open http://localhost:3333 in your browser.
 ### Options
 
 ```bash
-cloister --port 8080    # Use a different port
-cloister --help         # Show all options
+npx cloister --port 8080    # Use a different port
+npx cloister --help         # Show all options
 ```
 
 ## How It Works
