@@ -129,6 +129,12 @@ When asked to "work on the next task" or similar:
 7. Commit all changes as a single commit with message referencing the task
 8. Loop back to step 1 if requested
 
+## Lessons Learned
+
+Guidelines derived from past mistakes to avoid repeating them:
+
+- **Search before inventing values**: When adding URLs, paths, names, or other values that likely already exist in the codebase, search for them first rather than guessing or constructing them from memory.
+
 ## Known Limitations & TODOs
 
 **Not yet implemented**:
