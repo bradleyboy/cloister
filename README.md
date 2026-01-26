@@ -81,9 +81,14 @@ What needs to be done.
 
 ### Creating a Task
 
-1. Copy `.claude-tasks/TEMPLATE.md` to a new file
-2. Fill in the title, problem description, and acceptance criteria
-3. Set `status: pending`
+Use the `/task` command in Claude Code to create a new task:
+
+```bash
+/task fix the SSE reconnection bug
+/task add search functionality across sessions
+```
+
+This automatically creates a properly formatted task file in `.claude-tasks/` with your description.
 
 ### Running Tasks
 
