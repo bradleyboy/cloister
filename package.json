@@ -28,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bdaily/cloister"
+    "url": "https://github.com/bradleyboy/cloister"
   },
   "engines": {
     "bun": ">=1.0.0"
