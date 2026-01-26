@@ -44,7 +44,7 @@ If you want to contribute to Cloister or run it from source:
 
 ```bash
 # Clone the repository
-git clone https://github.com/bdailey/cloister.git
+git clone https://github.com/bradleyboy/cloister.git
 cd cloister
 
 # Install dependencies
