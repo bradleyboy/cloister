@@ -124,10 +124,11 @@ When asked to "work on the next task" or similar:
 2. Read and assess each pending task (severity, dependencies, complexity)
 3. Select one task, set `status: in-progress`
 4. Complete the work
-5. Append to Work Log with date, solution summary, and files modified
-6. Set `status: completed`
-7. Commit all changes as a single commit with message referencing the task
-8. Loop back to step 1 if requested
+5. Check off each acceptance criteria item (`- [ ]` → `- [x]`) as it is verified
+6. Append to Work Log with date, solution summary, and files modified
+7. Set `status: completed` (only after all acceptance criteria are checked off)
+8. Commit all changes as a single commit with message referencing the task
+9. Loop back to step 1 if requested
 
 ## Lessons Learned
 
