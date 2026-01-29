@@ -1022,7 +1022,7 @@ body {
 
 /* Todo/Task content */
 .todo-list {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
 }
 
 .todo-item {
@@ -1048,6 +1048,8 @@ body {
 .todo-checkbox {
   font-size: 14px;
   flex-shrink: 0;
+  width: 24px;
+  text-align: center;
 }
 
 .todo-content {
@@ -1074,7 +1076,7 @@ body {
 
 /* Task agent content */
 .task-agent-content {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1098,7 +1100,7 @@ body {
 
 /* Search content */
 .search-content {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1112,7 +1114,7 @@ body {
 
 /* Bash content */
 .bash-content {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
 }
 
 .bash-command {
@@ -1129,7 +1131,7 @@ body {
 
 /* Tool detail fallback */
 .tool-detail {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
 }
 
 .tool-detail pre {
@@ -1605,13 +1607,13 @@ code {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-muted);
-  padding: 8px 12px;
+  padding: 8px 14px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
 }
 
 .tool-section-content {
-  padding: 10px 14px 10px 48px;
+  padding: 10px 14px;
 }
 
 .tool-output .tool-section-header {
