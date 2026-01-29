@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.4 (2026-01-28)
+
+- Add release script with changelog generation
+- Pin status indicator to bottom of message list
+- Fix tool card sublist alignment to match header padding
+- Auto-find available port when desired port is taken
+
+
 ## v1.0.3 (2025-01-28)
 
 - Make tool calls expandable with input/output display
