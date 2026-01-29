@@ -1509,7 +1509,13 @@ function appendMessage(message) {
     </div>
   `;
 
-  container.appendChild(messageDiv);
+  // Insert before the status indicator if it exists, to keep it pinned at the bottom
+  const statusIndicator = container.querySelector('.status-indicator-message');
+  if (statusIndicator) {
+    container.insertBefore(messageDiv, statusIndicator);
+  } else {
+    container.appendChild(messageDiv);
+  }
 
   // Setup event listeners for new content (including deferred tool content)
   messageDiv.querySelectorAll('.tool-header').forEach(header => {
