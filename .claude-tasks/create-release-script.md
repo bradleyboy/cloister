@@ -24,6 +24,7 @@ Need a release script that automates the full release workflow:
 - [x] Script generates a changelog summary from commits since the last npm version tag and appends to `CHANGELOG.md`
 - [x] Script runs `npm version`, `git push`, and `npm publish` in sequence
 - [x] Script exits early with a clear error if any step fails
+- [x] Ensure the operator is logged in to npm before any action is taken to prevent failure at the publishing step, leaving the release in a half-finished state.
 
 ---
 
@@ -36,3 +37,8 @@ Need a release script that automates the full release workflow:
 - Created initial `CHANGELOG.md` with history for v1.0.1 through v1.0.3
 - Files created: `release.sh`, `CHANGELOG.md`
 - Files modified: `.claude-tasks/create-release-script.md`
+
+### 2026-01-28 - Final acceptance criterion completed
+- Added `npm whoami` check at the start of `release.sh` (before any version bumping or git operations) to ensure the operator is logged in to npm
+- If not logged in, the script exits with a clear error message directing the user to run `npm login`
+- Files modified: `release.sh`, `.claude-tasks/create-release-script.md`

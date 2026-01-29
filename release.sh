@@ -27,6 +27,13 @@ if [[ "$VERSION_TYPE" != "patch" && "$VERSION_TYPE" != "minor" && "$VERSION_TYPE
   exit 1
 fi
 
+# Ensure the operator is logged in to npm
+if ! npm whoami >/dev/null 2>&1; then
+  echo "Error: Not logged in to npm. Run 'npm login' first." >&2
+  exit 1
+fi
+echo "Logged in to npm as: $(npm whoami)"
+
 # Ensure working directory is clean
 if [ -n "$(git status --porcelain)" ]; then
   echo "Error: Working directory is not clean. Commit or stash changes first." >&2
