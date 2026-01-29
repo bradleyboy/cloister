@@ -513,6 +513,7 @@ function returnToListView() {
   }
 
   state.currentSession = null;
+  document.title = 'Cloister';
 
   // Switch views
   document.getElementById('list-view').classList.remove('hidden');
@@ -1407,6 +1408,7 @@ async function showList() {
   }
 
   state.currentSession = null;
+  document.title = 'Cloister';
 
   // Switch views
   document.getElementById('list-view').classList.remove('hidden');
@@ -1443,6 +1445,7 @@ function startEventStream(sessionId) {
       state.currentSession.status = status;
       // Only update the status UI, not re-render everything
       updateStatusUI(status);
+      updateDocumentTitle(status);
 
       // Send notification if status changed to awaiting
       if (oldStatus !== 'awaiting' && status === 'awaiting') {
@@ -1605,6 +1608,17 @@ function updateQuestionCardIfNeeded(toolUseId, toolResults) {
       }
     });
   });
+}
+
+// Update browser tab title to reflect session status
+function updateDocumentTitle(status) {
+  if (!status || status === 'idle') {
+    document.title = 'Cloister';
+  } else if (status === 'working') {
+    document.title = 'Cloister: Claude is working...';
+  } else if (status === 'awaiting') {
+    document.title = 'Cloister: Claude is waiting for your input';
+  }
 }
 
 // Update only the status-related UI elements
@@ -1906,6 +1920,7 @@ async function navigateToSession(sessionId) {
 
     state.currentSession = data.session;
     renderSessionDetail(data.session, true);
+    updateDocumentTitle(data.session.status);
 
     // Start SSE for live updates
     startEventStream(sessionId);
@@ -1947,6 +1962,7 @@ function returnToListViewWithoutUrlUpdate() {
   }
 
   state.currentSession = null;
+  document.title = 'Cloister';
 
   // Switch views
   document.getElementById('list-view').classList.remove('hidden');
