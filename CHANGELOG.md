@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.5 (2026-01-29)
+
+- Mirror session status to browser title bar
+- Fix tool card sublist alignment to match header text
+- Fix empty You boxes and tool card sublist alignment
+- Add npm login check to release script
+
+
 ## v1.0.4 (2026-01-28)
 
 - Add release script with changelog generation
