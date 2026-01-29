@@ -63,6 +63,13 @@ class MessageLoader {
     // Use requestAnimationFrame to defer rendering and avoid blocking main thread
     requestAnimationFrame(() => {
       const contentHtml = renderMessageContent(message.content, this.toolResults);
+
+      // Guardrail: hide message entirely if rendered content is empty
+      if (!contentHtml.trim()) {
+        element.style.display = 'none';
+        return;
+      }
+
       contentDiv.innerHTML = contentHtml;
 
       // Remove skeleton class
@@ -574,20 +581,8 @@ function hasDisplayableContent(content) {
       return true;
     }
     if (block.type === 'tool_result') {
-      // Only show tool_result if it has string content that will actually render
-      // (renderToolResult only renders string content that looks like code/output)
-      const resultContent = block.content;
-      if (!resultContent) return false;
-      if (typeof resultContent === 'string') {
-        const trimmed = resultContent.trim();
-        if (trimmed.length === 0) return false;
-        // Only strings that look like code or bash output get rendered
-        const looksLikeCode = trimmed.includes('\n') &&
-          (trimmed.includes('function') || trimmed.includes('const ') || trimmed.includes('import '));
-        const looksLikeBash = trimmed.startsWith('$') || trimmed.includes('npm') || trimmed.includes('bun');
-        return looksLikeCode || looksLikeBash;
-      }
-      // Non-string content doesn't get rendered by renderToolResult
+      // Tool results are integrated into their corresponding tool_use cards,
+      // so renderToolResult() always returns ''. Never treat these as displayable.
       return false;
     }
     if (block.type === 'thinking') {

@@ -1022,7 +1022,7 @@ body {
 
 /* Todo/Task content */
 .todo-list {
-  padding: 10px 14px;
+  padding: 10px 14px 10px 48px;
 }
 
 .todo-item {
@@ -1074,7 +1074,7 @@ body {
 
 /* Task agent content */
 .task-agent-content {
-  padding: 10px 14px;
+  padding: 10px 14px 10px 48px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1098,7 +1098,7 @@ body {
 
 /* Search content */
 .search-content {
-  padding: 12px;
+  padding: 10px 14px 10px 48px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1112,7 +1112,7 @@ body {
 
 /* Bash content */
 .bash-content {
-  padding: 12px;
+  padding: 10px 14px 10px 48px;
 }
 
 .bash-command {
@@ -1129,7 +1129,7 @@ body {
 
 /* Tool detail fallback */
 .tool-detail {
-  padding: 12px;
+  padding: 10px 14px 10px 48px;
 }
 
 .tool-detail pre {
@@ -1611,7 +1611,7 @@ code {
 }
 
 .tool-section-content {
-  padding: 10px 14px;
+  padding: 10px 14px 10px 48px;
 }
 
 .tool-output .tool-section-header {
