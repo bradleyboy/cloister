@@ -123,13 +123,15 @@ When asked to "work on the next task" or similar:
 
 1. Scan `.claude-tasks/*.md` for `status: pending`
 2. Read and assess each pending task (severity, dependencies, complexity)
-3. Select one task, set `status: in-progress`
+3. Select **one** task, set `status: in-progress`
 4. Complete the work
 5. Check off each acceptance criteria item (`- [ ]` → `- [x]`) as it is verified
 6. Append to Work Log with date, solution summary, and files modified
 7. Set `status: completed` (only after all acceptance criteria are checked off)
 8. Commit all changes as a single commit with message referencing the task
-9. Loop back to step 1 if requested
+9. **STOP** — do not continue to the next task. The task runner will start a new iteration.
+
+**Critical rule**: Each task MUST produce exactly one commit. Never work on multiple tasks in a single iteration. Never bundle changes from multiple tasks into one commit. Always commit before finishing.
 
 ## Lessons Learned
 
