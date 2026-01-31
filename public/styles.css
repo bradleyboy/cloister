@@ -1001,6 +1001,13 @@ body {
   flex: 1;
 }
 
+.tool-header code {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+
 .tool-toggle {
   margin-left: auto;
   color: var(--text-muted);
@@ -1124,6 +1131,14 @@ body {
   font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
   font-size: 13px;
   color: var(--success);
+}
+
+.bash-command code {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 .bash-desc {
