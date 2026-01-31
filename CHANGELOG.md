@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.6 (2026-01-31)
+
+- Fix code block alignment within tool cards
+- Fix tool card header baseline and subcontent alignment
+- Fix tool card spacing and alignment issues
+- Enforce single task per commit in task runner
+
+
 ## v1.0.5 (2026-01-29)
 
 - Mirror session status to browser title bar
