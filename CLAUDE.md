@@ -133,6 +133,15 @@ When asked to "work on the next task" or similar:
 
 **Critical rule**: Each task MUST produce exactly one commit. Never work on multiple tasks in a single iteration. Never bundle changes from multiple tasks into one commit. Always commit before finishing.
 
+### Post-Commit Code Review
+
+After each task commit, the task runner invokes a separate Claude instance as a staff engineer reviewer (see `REVIEW-PROMPT.md` for the full prompt). The reviewer checks the diff against the task's acceptance criteria, project conventions, and common issues.
+
+- **Verdicts**: `NO NOTES` (clean), `PASS` (minor observations logged), or `NEEDS WORK` (issues to fix)
+- **Retry policy**: If the review returns `NEEDS WORK`, the feedback is fed to a new Claude invocation for a fix attempt. The review then runs once more. Maximum 2 review runs per task.
+- **Fail-open**: If verdict parsing fails, it defaults to `NO NOTES` to avoid blocking the loop.
+- **Review skip**: Tasks with filenames matching `review-fix-*` skip the review step entirely.
+
 ## Lessons Learned
 
 Guidelines derived from past mistakes to avoid repeating them:
