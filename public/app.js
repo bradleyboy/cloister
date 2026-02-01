@@ -518,6 +518,9 @@ function returnToListView() {
   // Switch views
   document.getElementById('list-view').classList.remove('hidden');
   document.getElementById('detail-view').classList.remove('active');
+
+  // Reset scroll position to top of list view
+  document.getElementById('list-view').scrollTop = 0;
 }
 
 // Show session detail
@@ -1414,6 +1417,9 @@ async function showList() {
   document.getElementById('list-view').classList.remove('hidden');
   document.getElementById('detail-view').classList.remove('active');
 
+  // Reset scroll position to top of list view
+  document.getElementById('list-view').scrollTop = 0;
+
   // Refresh session list and wait for it to complete
   await loadSessions();
 }
@@ -1903,6 +1909,9 @@ async function navigateToSession(sessionId) {
     document.getElementById('list-view').classList.add('hidden');
     document.getElementById('detail-view').classList.add('active');
 
+    // Reset messages scroll position for new session
+    messagesContainer.scrollTop = 0;
+
     const response = await fetch(`/api/sessions/${sessionId}`);
 
     if (!response.ok) {
@@ -1967,6 +1976,9 @@ function returnToListViewWithoutUrlUpdate() {
   // Switch views
   document.getElementById('list-view').classList.remove('hidden');
   document.getElementById('detail-view').classList.remove('active');
+
+  // Reset scroll position to top of list view
+  document.getElementById('list-view').scrollTop = 0;
 }
 
 // Update URL path when viewing a session
